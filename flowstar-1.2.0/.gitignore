@@ -1,0 +1,7 @@
+*.o
+*.output
+*.tab.c
+*.tab.h
+*.tab.o
+lex.yy.c
+flowstar
