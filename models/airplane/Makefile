@@ -14,3 +14,7 @@ airplane_single_sat:
 	if [ -e outputs/$@.plt ] ; then $(GNUPLOT_BIN) < outputs/$@.plt; fi
 	if [ -e images/$@.eps ] ; then $(EPSPDF_BIN) images/$@.eps; fi
 
+nonlinear_test:
+	$(FLOWSTAR_BIN) < $@.model
+	if [ -e outputs/$@.plt ] ; then $(GNUPLOT_BIN) < outputs/$@.plt; fi
+	if [ -e images/$@.eps ] ; then $(EPSPDF_BIN) images/$@.eps; fi
