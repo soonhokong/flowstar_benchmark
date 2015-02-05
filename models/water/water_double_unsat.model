@@ -1,0 +1,207 @@
+hybrid reachability
+{
+ state var x1, x2, tau
+
+ setting
+ {
+  fixed steps 0.01
+  time 6
+  remainder estimation 1e-5
+  QR precondition
+  gnuplot interval x1, x2
+  adaptive orders { min 1 , max 10 }
+  cutoff 1e-12
+  precision 53
+  output thermostat_double_unsat
+  max jumps 5
+  print on
+ }
+
+ modes
+ {
+  mode1
+  {
+   nonpoly ode
+   {
+        x1' = (5.0 - 0.5 * sqrt(2*9.80665) * sqrt(x1)) / 2.0
+        x2' = (3.0 + 0.5 * sqrt(2*9.80665) * (sqrt(x1) - sqrt(x2))) / 4.0
+        tau'  = 1
+   }
+   inv
+   {
+    tau >= 0
+    tau <= 1
+    x1 >= 0
+    x2 >= 0
+   }
+  }
+
+  mode2
+  {
+   nonpoly ode
+   {
+        x1' = (5.0 - 0.5 * sqrt(2*9.80665) * sqrt(x1)) / 2.0
+        x2' = (0.5 * sqrt(2*9.80665) * (sqrt(x1) - sqrt(x2))) / 4.0
+        tau'  = 1
+   }
+   inv
+   {
+    tau >= 0
+    tau <= 1
+    x1 >= 0
+    x2 >= 0
+   }
+  }
+
+  mode3
+  {
+   nonpoly ode
+   {
+        x1' = (- 0.5 * sqrt(2*9.80665) * sqrt(x1)) / 2.0
+        x2' = (3.0 + 0.5 * sqrt(2*9.80665) * (sqrt(x1) - sqrt(x2))) / 4.0
+        tau'  = 1
+   }
+   inv
+   {
+    tau >= 0
+    tau <= 1
+    x1 >= 0
+    x2 >= 0
+   }
+  }
+
+  mode4
+  {
+   nonpoly ode
+   {
+        x1' = (- 0.5 * sqrt(2*9.80665) * sqrt(x1)) / 2.0
+        x2' = (0.5 * sqrt(2*9.80665) * (sqrt(x1) - sqrt(x2))) / 4.0
+        tau'  = 1
+   }
+   inv
+   {
+    tau >= 0
+    tau <= 1
+    x1 >= 0
+    x2 >= 0
+   }
+  }
+ }
+
+ jumps
+ {
+  mode1 -> mode1
+  guard { x1 <= 5   x2 <= 5   tau = 1   }
+  reset { x1' := x1  x2' := x2  tau' := 0 }
+  parallelotope aggregation { }
+
+  mode1 -> mode2
+  guard { x1 <= 5   x2 >= 5   tau = 1   }
+  reset { x1' := x1  x2' := x2  tau' := 0 }
+  parallelotope aggregation { }
+
+  mode1 -> mode3
+  guard { x1 >= 5    x2 <= 5   tau = 1   }
+  reset { x1' := x1  x2' := x2  tau' := 0 }
+  parallelotope aggregation { }
+
+  mode1 -> mode4
+  guard { x1 >= 5    x2 >= 5    tau = 1   }
+  reset { x1' := x1  x2' := x2  tau' := 0 }
+  parallelotope aggregation { }
+
+  mode2 -> mode1
+  guard { x1 <= 5   x2 <= 5   tau = 1   }
+  reset { x1' := x1  x2' := x2  tau' := 0 }
+  parallelotope aggregation { }
+
+  mode2 -> mode2
+  guard { x1 <= 5   x2 >= 5    tau = 1   }
+  reset { x1' := x1  x2' := x2  tau' := 0 }
+  parallelotope aggregation { }
+
+  mode2 -> mode3
+  guard { x1 >= 5    x2 <= 5   tau = 1   }
+  reset { x1' := x1  x2' := x2  tau' := 0 }
+  parallelotope aggregation { }
+
+  mode2 -> mode4
+  guard { x1 >= 5    x2 >= 5    tau = 1   }
+  reset { x1' := x1  x2' := x2  tau' := 0 }
+  parallelotope aggregation { }
+
+  mode3 -> mode1
+  guard { x1 <= 5   x2 <= 5   tau = 1   }
+  reset { x1' := x1  x2' := x2  tau' := 0 }
+  parallelotope aggregation { }
+
+  mode3 -> mode2
+  guard { x1 <= 5   x2 >= 5    tau = 1   }
+  reset { x1' := x1  x2' := x2  tau' := 0 }
+  parallelotope aggregation { }
+
+  mode3 -> mode3
+  guard { x1 >= 5    x2 <= 5   tau = 1   }
+  reset { x1' := x1  x2' := x2  tau' := 0 }
+  parallelotope aggregation { }
+
+  mode3 -> mode4
+  guard { x1 >= 5    x2 >= 5    tau = 1   }
+  reset { x1' := x1  x2' := x2  tau' := 0 }
+  parallelotope aggregation { }
+
+  mode4 -> mode1
+  guard { x1 <= 5   x2 <= 5   tau = 1   }
+  reset { x1' := x1  x2' := x2  tau' := 0 }
+  parallelotope aggregation { }
+
+  mode4 -> mode2
+  guard { x1 <= 5   x2 >= 5    tau = 1   }
+  reset { x1' := x1  x2' := x2  tau' := 0 }
+  parallelotope aggregation { }
+
+  mode4 -> mode3
+  guard { x1 >= 5    x2 <= 5   tau = 1   }
+  reset { x1' := x1  x2' := x2  tau' := 0 }
+  parallelotope aggregation { }
+
+  mode4 -> mode4
+  guard { x1 >= 5    x2 >= 5    tau = 1   }
+  reset { x1' := x1  x2' := x2  tau' := 0 }
+  parallelotope aggregation { }
+ }
+
+ init
+ {
+  mode1
+  {
+    x1  in [4.9, 5.1]
+    x2  in [4.9, 5.1]
+    tau in [0,0]
+  }
+ }
+}
+
+unsafe set
+{
+ mode1
+ {
+  (x1 - 5) * (x1 - 5) >= 4
+  (x2 - 5) * (x2 - 5) >= 4
+ }
+ mode2
+ {
+  (x1 - 5) * (x1 - 5) >= 4
+  (x2 - 5) * (x2 - 5) >= 4
+ }
+ mode3
+ {
+  (x1 - 5) * (x1 - 5) >= 4
+  (x2 - 5) * (x2 - 5) >= 4
+ }
+ mode4
+ {
+  (x1 - 5) * (x1 - 5) >= 4
+  (x2 - 5) * (x2 - 5) >= 4
+ }
+}
