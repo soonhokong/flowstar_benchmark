@@ -1,0 +1,304 @@
+hybrid reachability
+{
+ state var beta, p, r, phi, psi, xAIL, xRDR, gAIL, gRDR, tau, gDir
+
+ setting
+ {
+  fixed steps 0.01
+  time 3
+  remainder estimation 1e-5
+  QR precondition
+  gnuplot interval psi, phi
+  adaptive orders { min 1 , max 10 }
+  cutoff 1e-12
+  precision 53
+  output airplane_single_nl_sat
+  max jumps 5
+  print on
+ }
+
+ modes
+ {
+  mode1
+  {
+   nonpoly ode
+   {
+        beta'    = (13.97 * 300) * (-0.02 * 180 / 3.1415926535897931 * beta + 0.021 * xAIL / 20 + 0.086 * xRDR / 30) / (20500.0 * 111.64) - r + (111.64 / 9.80555) * cos(beta) * sin(phi)
+        p'       = (-0.770 * r + 0.02755 * p) * r * (sin(phi) / cos(phi)) + (13.97 * 30 * 300) * (1.055e-4 * (-0.0008 * 180 / 3.1415926535897931 * beta + 0.05 * xAIL / 20 + 0.013 * xRDR / 30) + 1.642e-6 * (0.02 * 180 / 3.1415926535897931 * beta + -0.01 * xAIL / 20 + -0.04 * xRDR / 30))
+        r'       = (-0.7336 * p - 0.02755 * r) * r * (sin(phi) / cos(phi)) + (13.97 * 30 * 300) * (1.642e-6 * (-0.0008 * 180 / 3.1415926535897931 * beta + 0.05 * xAIL / 20 + 0.013 * xRDR / 30) + 1.587e-5 * (0.02 * 180 / 3.1415926535897931 * beta + -0.01 * xAIL / 20 + -0.04 * xRDR / 30))
+        phi'     = p
+        psi'     = (9.80555 / 111.64) * (sin(phi) / cos(phi))
+        xAIL'    = 0.25
+        xRDR'    = 0.5
+        gAIL'    = 0
+        gRDR'    = 0
+        gDir'    = 0
+        tau'     = 1
+   }
+   inv
+   {
+    tau >= 0
+    tau <= 0.5
+   }
+  }
+
+  mode2
+  {
+   nonpoly ode
+   {
+        beta'    = (13.97 * 300) * (-0.02 * 180 / 3.1415926535897931 * beta + 0.021 * xAIL / 20 + 0.086 * xRDR / 30) / (20500.0 * 111.64) - r + (111.64 / 9.80555) * cos(beta) * sin(phi)
+        p'       = (-0.770 * r + 0.02755 * p) * r * (sin(phi) / cos(phi)) + (13.97 * 30 * 300) * (1.055e-4 * (-0.0008 * 180 / 3.1415926535897931 * beta + 0.05 * xAIL / 20 + 0.013 * xRDR / 30) + 1.642e-6 * (0.02 * 180 / 3.1415926535897931 * beta + -0.01 * xAIL / 20 + -0.04 * xRDR / 30))
+        r'       = (-0.7336 * p - 0.02755 * r) * r * (sin(phi) / cos(phi)) + (13.97 * 30 * 300) * (1.642e-6 * (-0.0008 * 180 / 3.1415926535897931 * beta + 0.05 * xAIL / 20 + 0.013 * xRDR / 30) + 1.587e-5 * (0.02 * 180 / 3.1415926535897931 * beta + -0.01 * xAIL / 20 + -0.04 * xRDR / 30))
+        phi'     = p
+        psi'     = (9.80555 / 111.64) * (sin(phi) / cos(phi))
+        xAIL'    = 0.25
+        xRDR'    = -0.5
+        gAIL'    = 0
+        gRDR'    = 0
+        gDir'    = 0
+        tau'     = 1
+   }
+   inv
+   {
+    tau >= 0
+    tau <= 0.5
+   }
+  }
+
+  mode3
+  {
+   nonpoly ode
+   {
+        beta'    = (13.97 * 300) * (-0.02 * 180 / 3.1415926535897931 * beta + 0.021 * xAIL / 20 + 0.086 * xRDR / 30) / (20500.0 * 111.64) - r + (111.64 / 9.80555) * cos(beta) * sin(phi)
+        p'       = (-0.770 * r + 0.02755 * p) * r * (sin(phi) / cos(phi)) + (13.97 * 30 * 300) * (1.055e-4 * (-0.0008 * 180 / 3.1415926535897931 * beta + 0.05 * xAIL / 20 + 0.013 * xRDR / 30) + 1.642e-6 * (0.02 * 180 / 3.1415926535897931 * beta + -0.01 * xAIL / 20 + -0.04 * xRDR / 30))
+        r'       = (-0.7336 * p - 0.02755 * r) * r * (sin(phi) / cos(phi)) + (13.97 * 30 * 300) * (1.642e-6 * (-0.0008 * 180 / 3.1415926535897931 * beta + 0.05 * xAIL / 20 + 0.013 * xRDR / 30) + 1.587e-5 * (0.02 * 180 / 3.1415926535897931 * beta + -0.01 * xAIL / 20 + -0.04 * xRDR / 30))
+        phi'     = p
+        psi'     = (9.80555 / 111.64) * (sin(phi) / cos(phi))
+        xAIL'    = -0.25
+        xRDR'    = 0.5
+        gAIL'    = 0
+        gRDR'    = 0
+        gDir'    = 0
+        tau'     = 1
+   }
+   inv
+   {
+    tau >= 0
+    tau <= 0.5
+   }
+  }
+
+  mode4
+  {
+   nonpoly ode
+   {
+        beta'    = (13.97 * 300) * (-0.02 * 180 / 3.1415926535897931 * beta + 0.021 * xAIL / 20 + 0.086 * xRDR / 30) / (20500.0 * 111.64) - r + (111.64 / 9.80555) * cos(beta) * sin(phi)
+        p'       = (-0.770 * r + 0.02755 * p) * r * (sin(phi) / cos(phi)) + (13.97 * 30 * 300) * (1.055e-4 * (-0.0008 * 180 / 3.1415926535897931 * beta + 0.05 * xAIL / 20 + 0.013 * xRDR / 30) + 1.642e-6 * (0.02 * 180 / 3.1415926535897931 * beta + -0.01 * xAIL / 20 + -0.04 * xRDR / 30))
+        r'       = (-0.7336 * p - 0.02755 * r) * r * (sin(phi) / cos(phi)) + (13.97 * 30 * 300) * (1.642e-6 * (-0.0008 * 180 / 3.1415926535897931 * beta + 0.05 * xAIL / 20 + 0.013 * xRDR / 30) + 1.587e-5 * (0.02 * 180 / 3.1415926535897931 * beta + -0.01 * xAIL / 20 + -0.04 * xRDR / 30))
+        phi'     = p
+        psi'     = (9.80555 / 111.64) * (sin(phi) / cos(phi))
+        xAIL'    = -0.25
+        xRDR'    = -0.5
+        gAIL'    = 0
+        gRDR'    = 0
+        gDir'    = 0
+        tau'     = 1
+   }
+   inv
+   {
+    tau >= 0
+    tau <= 0.5
+   }
+  }
+ }
+
+ jumps
+ {
+  mode1 -> mode1
+  guard { tau = 0.5  gRDR - xRDR >= 0  gAIL - xAIL >= 0 }
+  reset { beta' := beta  p' := p r' := r phi' := phi psi' := psi
+          xAIL' := xAIL  xRDR' := xRDR
+          gAIL' := (gDir - psi *57.29579) * 0.5
+          gRDR' := beta * 0.35
+          gDir' := gDir
+          tau' := 0 }
+  parallelotope aggregation { }
+
+  mode1 -> mode2
+  guard { tau = 0.5  gRDR - xRDR <= 0  gAIL - xAIL >= 0}
+  reset { beta' := beta  p' := p r' := r phi' := phi psi' := psi
+          xAIL' := xAIL  xRDR' := xRDR
+          gAIL' := (gDir - psi*57.29579) * 0.5 gRDR' := beta * 0.35
+          gDir' := gDir
+          tau' := 0 }
+  parallelotope aggregation { }
+
+  mode1 -> mode3
+  guard { tau = 0.5  gRDR - xRDR >= 0  gAIL - xAIL <= 0}
+  reset { beta' := beta  p' := p r' := r phi' := phi psi' := psi
+          xAIL' := xAIL  xRDR' := xRDR gAIL' := gAIL
+          gAIL' := (gDir - psi*57.29579) * 0.5 gRDR' := beta * 0.35
+          gDir' := gDir
+          tau' := 0 }
+  parallelotope aggregation { }
+
+  mode1 -> mode4
+  guard { tau = 0.5  gRDR - xRDR <= 0  gAIL - xAIL <= 0}
+  reset { beta' := beta  p' := p r' := r phi' := phi psi' := psi
+          xAIL' := xAIL  xRDR' := xRDR
+          gAIL' := (gDir - psi*57.29579) * 0.5 gRDR' := beta * 0.35
+          gDir' := gDir
+          tau' := 0 }
+  parallelotope aggregation { }
+
+
+  mode2 -> mode1
+  guard { tau = 0.5  gRDR - xRDR >= 0  gAIL - xAIL >= 0 }
+  reset { beta' := beta  p' := p r' := r phi' := phi psi' := psi
+          xAIL' := xAIL  xRDR' := xRDR
+          gAIL' := (gDir - psi*57.29579) * 0.5 gRDR' := beta * 0.35
+          gDir' := gDir
+          tau' := 0 }
+  parallelotope aggregation { }
+
+  mode2 -> mode2
+  guard { tau = 0.5  gRDR - xRDR <= 0  gAIL - xAIL >= 0}
+  reset { beta' := beta  p' := p r' := r phi' := phi psi' := psi
+          xAIL' := xAIL  xRDR' := xRDR
+          gAIL' := (gDir - psi*57.29579) * 0.5 gRDR' := beta * 0.35
+          gDir' := gDir
+          tau' := 0 }
+  parallelotope aggregation { }
+
+  mode2 -> mode3
+  guard { tau = 0.5  gRDR - xRDR >= 0  gAIL - xAIL <= 0}
+  reset { beta' := beta  p' := p r' := r phi' := phi psi' := psi
+          xAIL' := xAIL  xRDR' := xRDR
+          gAIL' := (gDir - psi*57.29579) * 0.5 gRDR' := beta * 0.35
+          gDir' := gDir
+          tau' := 0 }
+  parallelotope aggregation { }
+
+  mode2 -> mode4
+  guard { tau = 0.5  gRDR - xRDR <= 0  gAIL - xAIL <= 0}
+  reset { beta' := beta  p' := p r' := r phi' := phi psi' := psi
+          xAIL' := xAIL  xRDR' := xRDR
+          gAIL' := (gDir - psi*57.29579) * 0.5 gRDR' := beta * 0.35
+          gDir' := gDir
+          tau' := 0 }
+  parallelotope aggregation { }
+
+
+  mode3 -> mode1
+  guard { tau = 0.5  gRDR - xRDR >= 0  gAIL - xAIL >= 0 }
+  reset { beta' := beta  p' := p r' := r phi' := phi psi' := psi
+          xAIL' := xAIL  xRDR' := xRDR
+          gAIL' := (gDir - psi*57.29579) * 0.5 gRDR' := beta * 0.35
+          gDir' := gDir
+          tau' := 0 }
+  parallelotope aggregation { }
+
+  mode3 -> mode2
+  guard { tau = 0.5  gRDR - xRDR <= 0  gAIL - xAIL >= 0}
+  reset { beta' := beta  p' := p r' := r phi' := phi psi' := psi
+          xAIL' := xAIL  xRDR' := xRDR
+          gAIL' := (gDir - psi*57.29579) * 0.5 gRDR' := beta * 0.35
+          gDir' := gDir
+          tau' := 0 }
+  parallelotope aggregation { }
+
+  mode3 -> mode3
+  guard { tau = 0.5  gRDR - xRDR >= 0  gAIL - xAIL <= 0}
+  reset { beta' := beta  p' := p r' := r phi' := phi psi' := psi
+          xAIL' := xAIL  xRDR' := xRDR
+          gAIL' := (gDir - psi*57.29579) * 0.5 gRDR' := beta * 0.35
+          gDir' := gDir
+          tau' := 0 }
+  parallelotope aggregation { }
+
+  mode3 -> mode4
+  guard { tau = 0.5  gRDR - xRDR <= 0  gAIL - xAIL <= 0}
+  reset { beta' := beta  p' := p r' := r phi' := phi psi' := psi
+          xAIL' := xAIL  xRDR' := xRDR
+          gAIL' := (gDir - psi*57.29579) * 0.5 gRDR' := beta * 0.35
+          gDir' := gDir
+          tau' := 0 }
+  parallelotope aggregation { }
+
+
+  mode4 -> mode1
+  guard { tau = 0.5  gRDR - xRDR >= 0  gAIL - xAIL >= 0 }
+  reset { beta' := beta  p' := p r' := r phi' := phi psi' := psi
+          xAIL' := xAIL  xRDR' := xRDR
+          gAIL' := (gDir - psi*57.29579) * 0.5 gRDR' := beta * 0.35
+          gDir' := gDir
+          tau' := 0 }
+  parallelotope aggregation { }
+
+  mode4 -> mode2
+  guard { tau = 0.5  gRDR - xRDR <= 0  gAIL - xAIL >= 0}
+  reset { beta' := beta  p' := p r' := r phi' := phi psi' := psi
+          xAIL' := xAIL  xRDR' := xRDR
+          gAIL' := (gDir - psi*57.29579) * 0.5 gRDR' := beta * 0.35
+          gDir' := gDir
+          tau' := 0 }
+  parallelotope aggregation { }
+
+  mode4 -> mode3
+  guard { tau = 0.5  gRDR - xRDR >= 0  gAIL - xAIL <= 0}
+  reset { beta' := beta  p' := p r' := r phi' := phi psi' := psi
+          xAIL' := xAIL  xRDR' := xRDR
+          gAIL' := (gDir - psi*57.29579) * 0.5 gRDR' := beta * 0.35
+          gDir' := gDir
+          tau' := 0 }
+  parallelotope aggregation { }
+
+  mode4 -> mode4
+  guard { tau = 0.5  gRDR - xRDR <= 0  gAIL - xAIL <= 0}
+  reset { beta' := beta  p' := p r' := r phi' := phi psi' := psi
+          xAIL' := xAIL  xRDR' := xRDR
+          gAIL' := (gDir - psi*57.29579) * 0.5 gRDR' := beta * 0.35
+          gDir' := gDir
+          tau' := 0 }
+  parallelotope aggregation { }
+
+ }
+
+ init
+ {
+  mode1
+  {
+        beta in [0,0]
+        p    in [0,0]
+        r    in [0,0]
+        phi  in [0,0]
+        psi  in [0,0]
+        gDir in [0.5, 0.7]
+        xAIL in [0,0]
+        xRDR in [0,0]
+        gAIL in [0,0]
+        gRDR in [0,0]
+        tau  in [0,0]
+  }
+ }
+}
+
+unsafe set
+{
+ mode1
+ {
+  beta * beta >= 0.0001
+ }
+ mode2
+ {
+  beta * beta >= 0.0001
+ }
+ mode3
+ {
+  beta * beta >= 0.0001
+ }
+ mode4
+ {
+  beta * beta >= 0.0001
+ }
+}
